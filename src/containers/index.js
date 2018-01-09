@@ -1,3 +1,5 @@
 export { default as MainContainer } from './Main/MainContainer'
 export { default as HeaderContainer } from './HeaderContainer/HeaderContainer'
 export { default as FileInputContainer } from './FileInput/FileInputContainer'
+export { default as CredsInputContainer } from './CredsInput/CredsInputContainer'
+export { default as ForgeFilesContainer} from './ForgeFilesContainer/ForgeFilesContainer'

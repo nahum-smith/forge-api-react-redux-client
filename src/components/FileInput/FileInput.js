@@ -5,11 +5,13 @@ import { bindActionCreators } from 'redux'
 import * as appActionCreators from '../../redux/modules/application'
 
 class FileInput extends Component {
+
   state = {
     fileName: '',
     file: '',
     fileSize: ''
   }
+
   setFileState = (data) => {
     this.setState({
       ...this.state,
@@ -18,40 +20,38 @@ class FileInput extends Component {
       fileSize: data.file.size
     })
   }
+
   handleChange = async (event) => {
-    var file = event.target.files[0];
-    this.props.setFileName(file.name)
-    this.props.readFileFromClient(file)
+    var inputFile = event.target.files[0];
+    this.props.setFile(inputFile)
+    this.props.handleInputFile()
   }
+
   render() {
-    var {fileName, fileSize} = this.state
+    console.log(this.props)
+    var {fileName, isPosting, isUploading, file} = this.props
     return (
       <div>
-        {!fileName
-          ? <input
-              id="myInput"
-              name='file'
-              type="file"
-              accept='.dwg, .pdf'
-              ref={(ref) => this.fileUpload = ref}
-              onChange={this.handleChange}/>
-          : <div>
-              <h2>{'File Upload Successful'}</h2>
-              <h4>{`FileName: ${fileName}`}</h4>
-              <h4>{`Size: ${fileSize}`}</h4>
-            </div>
-        }
-        {this.state.filePath !== '' ? <p>{this.state.filePath}</p> : null}
+        <input
+          id="myInput"
+          name='fileInput'
+          type="file"
+          accept='.dwg, .pdf, .rvt, .txt'
+          onChange={this.handleChange}/>
       </div>
     );
   }
 }
 
 function mapStateToProps({application}) {
+  var { isUploading, isPosting, file } = application
   return {
-    application
+    isUploading,
+    isPosting,
+    file
   }
 }
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(appActionCreators, dispatch)
 }
